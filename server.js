@@ -86,7 +86,6 @@ app.post('/saveEnvVars', (req, res) => {
     }
     res.json({ message: '💾Environment variables saved & reloaded' });
 });
-
 app.get('/getEnvVars', (req, res) => {
     const envConfig = dotenv.parse(fs.readFileSync('keys.env'));
     console.log("Fetching env vars:", envConfig);
