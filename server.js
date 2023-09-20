@@ -55,7 +55,7 @@ wss.on('connection', (ws) => {
 
 // HTTP setup
 app.server = app.listen(3000, () => {
-    console.log('Open the configuration page at http://localhost:3000');
+    console.log('As long as this window is open the bot will be online. Open the configuration page at http://localhost:3000');
 });
 
 app.server.on('upgrade', (request, socket, head) => {
@@ -63,7 +63,7 @@ app.server.on('upgrade', (request, socket, head) => {
         wss.emit('connection', ws, request);
     });
 });
-
+ 
 app.post('/savePersonality', (req, res) => {
     const { personalityContent } = req.body;
     fs.writeFileSync('personality.txt', personalityContent);
@@ -80,7 +80,9 @@ app.post('/saveEnvVars', (req, res) => {
     const { openaiToken, openaiOrg, discordToken } = req.body;
     fs.writeFileSync('keys.env', `OPENAI_TOKEN=${openaiToken}\nOPENAI_ORGANIZATION=${openaiOrg}\nDISCORD_TOKEN=${discordToken}`);
     console.log("Saved env vars:", openaiToken, openaiOrg, discordToken);
-    connectToDiscord(discordToken);  // Attempt to reconnect to Discord
+    if (discordToken) {
+        connectToDiscord(discordToken);  
+    }
     res.json({ message: '💾Environment variables saved & reloaded' });
 });
 
