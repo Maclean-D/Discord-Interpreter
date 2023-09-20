@@ -110,3 +110,9 @@ app.get('/getTextContent', (req, res) => {
     const instructionsContent = fs.existsSync('instructions.txt') ? fs.readFileSync('instructions.txt', 'utf8') : '';
     res.json({ personalityContent, instructionsContent });
 });
+
+app.get('/stopServer', (req, res) => {
+  console.log("🛑 Server is stopping.");
+  res.json({ message: '🛑 Server stopped' });
+  process.exit(0); // Stops the Node.js process
+});

@@ -158,12 +158,20 @@
      <input type="text" id="discordToken" style="width: 100%; margin-bottom: 5px;">
    </div>
    <div style="width: 50%;">
-    <button id="reloadEnvButton">
-     🔄️Reload Environment
-    </button>
+    <div style="display: flex; justify-content: flex-start; margin-bottom: 10px;">
+      <button id="reloadEnvButton">
+        🔄️Reload Environment
+      </button>
+      <button id="clearConsoleButton">
+        🗑️ Clear Console
+      </button>
+      <button id="stopServerButton">
+        🛑 Stop Server
+      </button>
+    </div>
     <div id="consoleOutput" style="border: 1px solid #ccc; height: 300px; overflow-y: scroll; padding: 10px;"></div>
-   </div>
   </div>
+  
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -229,6 +237,20 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
         });
   });
+});
+
+// Clear Console
+document.getElementById("clearConsoleButton").addEventListener("click", function() {
+  const logger = document.getElementById('consoleOutput');
+  logger.innerHTML = "";
+  console.log('🗑️ Console cleared');
+});
+
+// Stop Server
+document.getElementById("stopServerButton").addEventListener("click", function() {
+  // Note: Actual code to stop server should go here
+  console.log('🛑 Server stopped.');
+  fetch('/stopServer');
 });
 
 </script>
