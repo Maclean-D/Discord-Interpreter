@@ -28,20 +28,45 @@
       button:hover {
         background-color: #9dcaff;
       }
-
-button {
-    width: 150px;
-    height: 35px;
-    line-height: 35px;
-    text-align: center;
-    overflow: hidden;
-    white-space: nowrap;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+      button {
+        width: 150px;
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+        overflow: hidden;
+        white-space: nowrap;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      input[type="text"], textarea {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 0px 0;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        transition: 0.3s;
+      }
+      input[type="text"]:focus, textarea:focus {
+        border-color: #33466f;
+        box-shadow: 0 0 8px #33466f;
+      }
+      #consoleOutput {
+        font-family: 'Courier New', monospace;
+        background-color: #33466f;
+        color: #fff;
+        padding: 10px;
+        border-radius: 4px;
+        margin-left: 10px;
 }
-  </style>
+    </style>
+  </head>
+
+
+</html>
+
  </head>
  <body>
   <header style="background-color: #9dcaff; color: #fff; padding: 10px; text-align: center; display: flex; justify-content: center; align-items: center;">
@@ -68,7 +93,7 @@ button {
 });
   </script>
   <div style="display: flex; justify-content: space-between;">
-   <div style="width: 50%;">
+   <div style="width: 50%; padding-left: 10px;">
     <div style="display: flex; align-items: center; margin-bottom: 5px;">
      <label style="font-size: 24px; flex-grow: 1;">
       Personality Prompt:
@@ -116,18 +141,14 @@ button {
      <input type="text" id="discordToken" style="width: 100%; margin-bottom: 5px;">
    </div>
    <div style="width: 50%;">
-    <button>
+    <button id="reloadEnvButton">
      🔄️Reload Environment
     </button>
-    <button>
-     🧪Test Button 2
-    </button>
-    <button>
-     🧪Test Button 3
-    </button>
+    <div id="consoleOutput" style="border: 1px solid #ccc; height: 300px; overflow-y: scroll; padding: 10px;"></div>
    </div>
   </div>
-  <script>
+
+<script>
 document.addEventListener("DOMContentLoaded", function() {
   // Fetch text content and populate textareas
   fetch('/getTextContent')
@@ -174,9 +195,43 @@ document.addEventListener("DOMContentLoaded", function() {
       saveContent(id, '/saveEnvVars', { openaiToken, openaiOrg, discordToken });
     });
   });
+
+  // Reload Environment Variables
+  document.getElementById("reloadEnvButton").addEventListener("click", function() {
+    fetch('/reloadEnvVars')
+        .then(res => res.json())
+        .then(data => {
+            console.log(data.message);
+            // Refresh environment variable fields after reloading
+            fetch('/getEnvVars')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('openAIKey').value = data.openaiToken;
+                    document.getElementById('openAIOrg').value = data.openaiOrg;
+                    document.getElementById('discordToken').value = data.discordToken;
+                });
+        });
+  });
 });
 
 </script>
+
+<script>
+  // Capture console output
+  (function() {
+    const oldLog = console.log;
+    const logger = document.getElementById('consoleOutput');
+    console.log = function(message) {
+      if (typeof message === 'object') {
+        logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
+      } else {
+        logger.innerHTML += message + '<br />';
+      }
+      oldLog.apply(undefined, arguments);
+    };
+  })();
+</script>
+
 
 </body>
 </html>

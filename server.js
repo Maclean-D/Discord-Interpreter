@@ -14,19 +14,35 @@ dotenv.config({ path: './keys.env' });
 app.post('/savePersonality', (req, res) => {
     const { personalityContent } = req.body;
     fs.writeFileSync('personality.txt', personalityContent);
-    res.json({ message: 'Personality content saved!' });
+    res.json({ message: '🧑‍💻Personality content saved!' });
 });
 
 app.post('/saveInstructions', (req, res) => {
     const { instructionsContent } = req.body;
     fs.writeFileSync('instructions.txt', instructionsContent);
-    res.json({ message: 'Instructions content saved!' });
+    res.json({ message: '📜Instructions content saved!' });
 });
 
 app.post('/saveEnvVars', (req, res) => {
     const { openaiToken, openaiOrg, discordToken } = req.body;
     fs.writeFileSync('keys.env', `OPENAI_TOKEN=${openaiToken}\nOPENAI_ORGANIZATION=${openaiOrg}\nDISCORD_TOKEN=${discordToken}`);
-    res.json({ message: 'Env vars saved!' });
+    console.log("Saved env vars:", openaiToken, openaiOrg, discordToken);
+    res.json({ message: '💾Environment variables saved & reloaded' });
+});
+
+app.get('/getEnvVars', (req, res) => {
+    const envConfig = dotenv.parse(fs.readFileSync('keys.env'));
+    console.log("Fetching env vars:", envConfig.OPENAI_TOKEN, envConfig.OPENAI_ORGANIZATION, envConfig.DISCORD_TOKEN);
+    res.json({
+        openaiToken: envConfig.OPENAI_TOKEN,
+        openaiOrg: envConfig.OPENAI_ORGANIZATION,
+        discordToken: envConfig.DISCORD_TOKEN
+    });
+});
+
+app.get('/reloadEnvVars', (req, res) => {
+    dotenv.config({ path: './keys.env' });
+    res.json({ message: '🔄️Environment variables reloaded' });
 });
 
 app.get('/', (req, res) => {
@@ -37,15 +53,6 @@ app.get('/getTextContent', (req, res) => {
     const personalityContent = fs.existsSync('personality.txt') ? fs.readFileSync('personality.txt', 'utf8') : '';
     const instructionsContent = fs.existsSync('instructions.txt') ? fs.readFileSync('instructions.txt', 'utf8') : '';
     res.json({ personalityContent, instructionsContent });
-});
-
-app.get('/getEnvVars', (req, res) => {
-    const envVars = {
-        openaiToken: process.env.OPENAI_TOKEN,
-        openaiOrg: process.env.OPENAI_ORGANIZATION,
-        discordToken: process.env.DISCORD_TOKEN,
-    };
-    res.json(envVars);
 });
 
 app.listen(3000, () => {
