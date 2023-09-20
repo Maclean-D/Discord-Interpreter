@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Settings Page
+    </title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+      }
+      header {
+        background-color: #9dcaff;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+      }
+      button {
+        background-color: #33466f;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        margin: 10px;
+      }
+      button:hover {
+        background-color: #9dcaff;
+      }
+
+button {
+    width: 150px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  </style>
+ </head>
+ <body>
+  <header style="background-color: #9dcaff; color: #fff; padding: 10px; text-align: center; display: flex; justify-content: center; align-items: center;">
+   <img alt="Bot Logo" src="./Site Files/BotLogo.png" style="height: 50px; width: auto; vertical-align: middle;"/>
+   <h1 style="margin-left: 5px;">
+    Morizuru CrAIne
+   </h1>
+  </header>
+  <script>
+   document.addEventListener("DOMContentLoaded", function() {
+    // Button click event for saving Personality
+    document.getElementById("savePersonality").addEventListener("click", function() {
+        var personalityContent = document.querySelectorAll('textarea')[0].value;
+        // Note: Actual code for saving to personality.txt should go here
+        alert('Changed Personality to: ' + personalityContent);
+    });
+    
+    // Button click event for saving Instructions
+    document.getElementById("saveInstructions").addEventListener("click", function() {
+        var instructionsContent = document.querySelectorAll('textarea')[1].value;
+        // Note: Actual code for saving to instructions.txt should go here
+        alert('Changed Instructions to: ' + instructionsContent);
+    });
+});
+  </script>
+  <div style="display: flex; justify-content: space-between;">
+   <div style="width: 50%;">
+    <div style="display: flex; align-items: center; margin-bottom: 5px;">
+     <label style="font-size: 24px; flex-grow: 1;">
+      Personality Prompt:
+     </label>
+     <button id="savePersonality" style="margin-left: 10px;">
+      💾Save
+     </button>
+    </div>
+    <textarea style="width: 100%; height: 100px; resize: vertical; margin-bottom: 5px;"></textarea>
+    <div style="display: flex; align-items: center; margin-bottom: 5px;">
+     <label style="font-size: 24px; flex-grow: 1;">
+       Instructions Prompt:
+      </label>
+      <button id="saveInstructions" style="margin-left: 10px;">
+       💾Save
+      </button>
+     </div>
+     <textarea style="width: 100%; height: 100px; resize: vertical;"></textarea>
+     <div style="display: flex; align-items: center; margin-bottom: 5px;">
+      <label style="font-size: 16px; flex-grow: 1;">
+       OpenAI API Key:
+      </label>
+      <button id="saveOpenAIKey" style="margin-left: 10px;">
+       💾Save
+      </button>
+     </div>
+     <input type="text" id="openAIKey" style="width: 100%; margin-bottom: 5px;">
+     <div style="display: flex; align-items: center; margin-bottom: 5px;">
+      <label style="font-size: 16px; flex-grow: 1;">
+       OpenAI Organization ID:
+      </label>
+      <button id="saveOpenAIOrg" style="margin-left: 10px;">
+       💾Save
+      </button>
+     </div>
+     <input type="text" id="openAIOrg" style="width: 100%; margin-bottom: 5px;">
+     <div style="display: flex; align-items: center; margin-bottom: 5px;">
+      <label style="font-size: 16px; flex-grow: 1;">
+       Discord Bot Token:
+      </label>
+      <button id="saveDiscordToken" style="margin-left: 10px;">
+       💾Save
+      </button>
+     </div>
+     <input type="text" id="discordToken" style="width: 100%; margin-bottom: 5px;">
+   </div>
+   <div style="width: 50%;">
+    <button>
+     🔄️Reload Environment
+    </button>
+    <button>
+     🧪Test Button 2
+    </button>
+    <button>
+     🧪Test Button 3
+    </button>
+   </div>
+  </div>
+  <script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Fetch text content and populate textareas
+  fetch('/getTextContent')
+    .then(res => res.json())
+    .then(data => {
+      document.querySelectorAll('textarea')[0].value = data.personalityContent;
+      document.querySelectorAll('textarea')[1].value = data.instructionsContent;
+    });
+
+  // Fetch environment variables and populate textboxes
+  fetch('/getEnvVars')
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('openAIKey').value = data.openaiToken;
+      document.getElementById('openAIOrg').value = data.openaiOrg;
+      document.getElementById('discordToken').value = data.discordToken;
+    });
+
+  // Function to save content
+  const saveContent = (id, endpoint, content) => {
+    fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(content)
+    })
+    .then(res => res.json())
+    .then(data => console.log(data.message));
+  };
+
+  // Save Personality and Instructions
+  ['savePersonality', 'saveInstructions'].forEach((id) => {
+    document.getElementById(id).addEventListener("click", function() {
+      const content = document.querySelectorAll('textarea')[id === 'savePersonality' ? 0 : 1].value;
+      saveContent(id, `/${id}`, { [`${id === 'savePersonality' ? 'personalityContent' : 'instructionsContent'}`]: content });
+    });
+  });
+
+  // Save Environment Variables
+  ['saveOpenAIKey', 'saveOpenAIOrg', 'saveDiscordToken'].forEach((id) => {
+    document.getElementById(id).addEventListener("click", function() {
+      const openaiToken = document.getElementById('openAIKey').value;
+      const openaiOrg = document.getElementById('openAIOrg').value;
+      const discordToken = document.getElementById('discordToken').value;
+      saveContent(id, '/saveEnvVars', { openaiToken, openaiOrg, discordToken });
+    });
+  });
+});
+
+</script>
+
+</body>
+</html>
