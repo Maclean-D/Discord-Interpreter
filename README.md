@@ -1,8 +1,6 @@
 # Discord-Interpreter
-A Discord bot that leverages open interpreter to answer queries and modify files.
+A Discord bot that leverages open interpreter to answer queries and modify files with a web configuration gui.
 Actively in development!
-
- Discord bot with a web configuration gui that uses open-interpreter.
 
 
 ## Setup
