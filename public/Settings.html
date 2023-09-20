@@ -148,13 +148,13 @@
      </div>
      <input type="text" id="openAIOrg" style="width: 100%; margin-bottom: 5px;">
      <div style="display: flex; align-items: center; margin-bottom: 5px;">
-      <label style="font-size: 16px; flex-grow: 1;">
-       Discord Bot Token:
+      <label id="discordBotTokenTitle" style="font-size: 16px; flex-grow: 1;">
+        Discord Bot Token:
       </label>
       <button id="saveDiscordToken" style="margin-left: 10px;">
-       💾Save
+        💾Save
       </button>
-     </div>
+    </div>    
      <input type="text" id="discordToken" style="width: 100%; margin-bottom: 5px;">
    </div>
    <div style="width: 50%;">
@@ -183,25 +183,30 @@ document.addEventListener("DOMContentLoaded", function() {
       document.querySelectorAll('textarea')[1].value = data.instructionsContent;
     });
 
-  // Fetch environment variables and populate textboxes
-  fetch('/getEnvVars')
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById('openAIKey').value = data.openaiToken;
-      document.getElementById('openAIOrg').value = data.openaiOrg;
-      document.getElementById('discordToken').value = data.discordToken;
-    });
+// Fetch environment variables and populate textboxes
+fetch('/getEnvVars')
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('openAIKey').value = data.openaiToken;
+    document.getElementById('openAIOrg').value = data.openaiOrg;
+    document.getElementById('discordToken').value = data.discordToken;
+    
+    // Update Discord Bot Token title
+    const discordBotTokenTitle = document.getElementById('discordBotTokenTitle');
+    const botName = data.discordBotName ? `Connected to ${data.discordBotName}` : '';
+    discordBotTokenTitle.innerText = `Discord Bot Token: (${botName})`;
+  });
 
-  // Function to save content
-  const saveContent = (id, endpoint, content) => {
-    fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(content)
-    })
-    .then(res => res.json())
-    .then(data => console.log(data.message));
-  };
+// Function to save content
+const saveContent = (id, endpoint, content) => {
+  fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(content)
+  })
+  .then(res => res.json())
+  .then(data => console.log(data.message));
+};
 
   // Save Personality and Instructions
   ['savePersonality', 'saveInstructions'].forEach((id) => {

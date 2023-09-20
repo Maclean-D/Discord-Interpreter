@@ -29,8 +29,9 @@ const connectToDiscord = (token) => {
 
     client.once('ready', () => {
         console.log(`🤖 Connected to Discord as ${client.user.tag}`);
+        fs.appendFileSync('keys.env', `\nDISCORD_BOT_NAME=${client.user.tag}`);
         wss.clients.forEach(client => client.send(`🤖 Connected to Discord as ${client.user.tag}`));
-    });
+    });    
 
     client.login(token).catch(err => {
         console.error('🔴Failed to connect to Discord:', err.message);
@@ -88,11 +89,12 @@ app.post('/saveEnvVars', (req, res) => {
 
 app.get('/getEnvVars', (req, res) => {
     const envConfig = dotenv.parse(fs.readFileSync('keys.env'));
-    console.log("Fetching env vars:", envConfig.OPENAI_TOKEN, envConfig.OPENAI_ORGANIZATION, envConfig.DISCORD_TOKEN);
+    console.log("Fetching env vars:", envConfig);
     res.json({
         openaiToken: envConfig.OPENAI_TOKEN,
         openaiOrg: envConfig.OPENAI_ORGANIZATION,
-        discordToken: envConfig.DISCORD_TOKEN
+        discordToken: envConfig.DISCORD_TOKEN,
+        discordBotName: envConfig.DISCORD_BOT_NAME
     });
 });
 
