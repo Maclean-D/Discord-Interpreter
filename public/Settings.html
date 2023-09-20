@@ -217,19 +217,32 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 <script>
-  // Capture console output
-  (function() {
-    const oldLog = console.log;
-    const logger = document.getElementById('consoleOutput');
-    console.log = function(message) {
-      if (typeof message === 'object') {
-        logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
-      } else {
-        logger.innerHTML += message + '<br />';
-      }
-      oldLog.apply(undefined, arguments);
-    };
-  })();
+// Capture console output
+// Capture console output
+(function() {
+  const oldLog = console.log;
+  const logger = document.getElementById('consoleOutput');
+  console.log = function(message) {
+    if (typeof message === 'object') {
+      logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
+    } else {
+      logger.innerHTML += message + '<br />';
+    }
+    oldLog.apply(undefined, arguments);
+  };
+})();
+
+// WebSocket Connection for Console Output
+const ws = new WebSocket('ws://localhost:3000');
+
+ws.addEventListener('open', function(event) {
+  console.log('🌐WebSocket connected.');
+});
+
+ws.addEventListener('message', function(event) {
+  console.log(event.data);
+});
+
 </script>
 
 
