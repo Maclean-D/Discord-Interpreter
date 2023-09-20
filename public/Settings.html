@@ -61,7 +61,23 @@
         border-radius: 4px;
         margin-left: 10px;
         margin-right: 10px;
+      }
+      @keyframes rainbow {
+        0% {background-position: 300% 50%;}
+        100% {background-position: 0% 50%;}
+      }
+      .rainbowText {
+        background-image: linear-gradient(to right, #ff0022, #e8002a, #ee00ff, #9600e8, #6100ff, #9600e8, #ee00ff, #e8002a);
+        background-size: 300% 100%;
+        -webkit-background-clip: text;
+        color: transparent;
+        display: inline;
+        animation: rainbow 7s ease-in-out infinite;
+        }
+
+
 }
+
     </style>
   </head>
 
@@ -73,8 +89,8 @@
   <header style="background-color: #9dcaff; color: #fff; padding: 10px; text-align: center; display: flex; justify-content: center; align-items: center;">
    <img alt="Bot Logo" src="./Site Files/BotLogo.png" style="height: 50px; width: auto; vertical-align: middle;"/>
    <h1 style="margin-left: 5px;">
-    Morizuru CrAIne
-   </h1>
+    Morizuru Cr<span class="rainbowText">AI</span>ne
+  </h1>  
   </header>
   <script>
    document.addEventListener("DOMContentLoaded", function() {
