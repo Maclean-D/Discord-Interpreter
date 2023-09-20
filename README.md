@@ -1,6 +1,8 @@
 # Discord-Interpreter
-A Discord bot that leverages open interpreter to answer queries and modify files with a web configuration gui.
-Actively in development!
+A Discord bot that leverages open interpreter to answer queries and modify files with a web configuration gui.  Actively in development!
+
+Web Configuration GUI:
+![Picture of web configuration gui](SettingsPage.png)
 
 
 ## Setup
