@@ -8,7 +8,7 @@ Actively in development!
 1. Clone the repository:
 
 ```bash
-git clone 
+git clone https://github.com/Maclean-D/Discord-Interpreter.git
 ```
 
 2. Install the required dependencies:
@@ -17,9 +17,7 @@ git clone
 cd Discord-Interpreter
 ```
 
-You need Node.js version ___ or higher
-
-3. Run the bot:
+1. Run the bot:
 
 ```bash
 node server.js
