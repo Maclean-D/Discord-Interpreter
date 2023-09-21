@@ -1,0 +1,81 @@
+/* General settings applied to the whole body of the page */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+  }
+  /* Header settings: Background color, text color, padding, and center alignment */
+  header {
+    background-color: #9dcaff;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+  }
+  /* Button settings: Background color, text color, padding, borderless, small margin around */
+  button {
+    background-color: #33466f;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    margin: 10px;
+  }
+  /* Button hover effect: Changes the background color */
+  button:hover {
+    background-color: #9dcaff;
+  }
+  /* Button size, alignment and styling */
+  button {
+    width: 150px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Text input and textarea settings: width, padding, margin, border, transition */
+  input[type="text"], textarea {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 0px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    transition: 0.3s;
+  }
+  /* Text input and textarea focus settings: border color, shadow appearance */
+  input[type="text"]:focus, textarea:focus {
+    border-color: #33466f;
+    box-shadow: 0 0 8px #33466f;
+  }
+  
+  /* Console Output specific settings: font, colors, padding, border */
+  #consoleOutput {
+    font-family: 'Courier New', monospace;
+    background-color: #33466f;
+    color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  
+  /* Rainbow text animation keyframes */
+  @keyframes rainbow {
+    0% {background-position: 300% 50%;}
+    100% {background-position: 0% 50%;}
+  }
+  /* Rainbow text class settings and animation */
+  .rainbowText {
+    background-image: linear-gradient(to right, #ff0022, #e8002a, #ee00ff, #9600e8, #6100ff, #9600e8, #ee00ff, #e8002a);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline;
+    animation: rainbow 7s ease-in-out infinite;
+  }  

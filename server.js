@@ -4,48 +4,15 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const dotenv = require('dotenv');
 const { Server } = require('ws');
-const { Client, GatewayIntentBits } = require('discord.js');
+const connectToDiscord = require('./discord');
 
 const app = express();
 const wss = new Server({ noServer: true });
 
-app.use(bodyParser.json());
-app.use(express.static('public'));
-
 dotenv.config({ path: './keys.env' });
 
-let client;
-
-const connectToDiscord = (token) => {
-    if (client) {
-        client.destroy();
-    }
-    client = new Client({
-        intents: [
-            GatewayIntentBits.Guilds,
-            // Add more intents based on your bot's needs
-        ],
-    });
-
-    client.once('ready', () => {
-        console.log(`🤖 Connected to Discord as ${client.user.tag}`);
-        fs.appendFileSync('keys.env', `\nDISCORD_BOT_NAME=${client.user.tag}`);
-        wss.clients.forEach(client => client.send(`🤖 Connected to Discord as ${client.user.tag}`));
-    });    
-
-    client.login(token).catch(err => {
-        console.error('🔴Failed to connect to Discord:', err.message);
-        wss.clients.forEach(client => client.send(`🔴Failed to connect to Discord: ${err.message}`));
-    });
-};
-
-const discordToken = process.env.DISCORD_TOKEN || '';
-if (discordToken) {
-    connectToDiscord(discordToken);
-} else {
-    console.error('🔴No Discord bot token provided.');
-    wss.clients.forEach(client => client.send('🔴No Discord bot token provided.'));
-}
+app.use(bodyParser.json());
+app.use(express.static('public'));
 
 // WebSocket setup
 wss.on('connection', (ws) => {
@@ -64,7 +31,7 @@ app.server.on('upgrade', (request, socket, head) => {
         wss.emit('connection', ws, request);
     });
 });
- 
+
 app.post('/savePersonality', (req, res) => {
     const { personalityContent } = req.body;
     fs.writeFileSync('personality.txt', personalityContent);
@@ -86,6 +53,7 @@ app.post('/saveEnvVars', (req, res) => {
     }
     res.json({ message: '💾Environment variables saved & reloaded' });
 });
+
 app.get('/getEnvVars', (req, res) => {
     const envConfig = dotenv.parse(fs.readFileSync('keys.env'));
     console.log("Fetching env vars:", envConfig);
