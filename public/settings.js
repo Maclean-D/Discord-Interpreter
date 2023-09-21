@@ -26,7 +26,8 @@ document.addEventListener("DOMContentLoaded", function() {
       document.getElementById('openAIKey').value = data.openaiToken;
       document.getElementById('openAIOrg').value = data.openaiOrg;
       document.getElementById('discordToken').value = data.discordToken;
-      document.getElementById('undetectableAIKey').value = data.undetectableAIToken; // New line for Undetectable AI
+      document.getElementById('undetectableAIKey').value = data.undetectableAIToken;
+      document.getElementById('discordClientID').value = data.discordClientID;
     });
 
   // Save content to server
@@ -58,13 +59,14 @@ textareas.forEach(textarea => {
   });
 
   // Add event listeners for saving API keys
-  ['saveOpenAIKey', 'saveOpenAIOrg', 'saveDiscordToken', 'saveUndetectableAI'].forEach((id) => {  // Added 'saveUndetectableAI'
+  ['saveOpenAIKey', 'saveOpenAIOrg', 'saveDiscordToken', 'saveDiscordClientID', 'saveUndetectableAI'].forEach((id) => {
     document.getElementById(id).addEventListener("click", function() {
       const openaiToken = document.getElementById('openAIKey').value;
       const openaiOrg = document.getElementById('openAIOrg').value;
       const discordToken = document.getElementById('discordToken').value;
-      const undetectableAIToken = document.getElementById('undetectableAIKey').value; // New line for Undetectable AI
-      saveContent(id, '/saveEnvVars', { openaiToken, openaiOrg, discordToken, undetectableAIToken });  // Added undetectableAIToken
+      const discordClientID = document.getElementById('discordClientID').value;
+      const undetectableAIToken = document.getElementById('undetectableAIKey').value;
+      saveContent(id, '/saveEnvVars', { openaiToken, openaiOrg, discordToken, discordClientID, undetectableAIToken });
     });
   });
 
@@ -103,14 +105,31 @@ textareas.forEach(textarea => {
 // Capture console output
 (function() {
   const oldLog = console.log;
+  const oldError = console.error;
+  const oldWarn = console.warn;
   const logger = document.getElementById('consoleOutput');
-  console.log = function(message) {
+
+  function logToDiv(message, type) {
     if (typeof message === 'object') {
-      logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
+      logger.innerHTML += `<span class="${type}">${JSON && JSON.stringify ? JSON.stringify(message) : message}</span><br />`;
     } else {
-      logger.innerHTML += message + '<br />';
+      logger.innerHTML += `<span class="${type}">${message}</span><br />`;
     }
-    oldLog.apply(arguments);
+  }
+
+  console.log = function(message) {
+    logToDiv(message, 'log');
+    oldLog.apply(console, arguments);
+  };
+
+  console.error = function(message) {
+    logToDiv(message, 'error');
+    oldError.apply(console, arguments);
+  };
+
+  console.warn = function(message) {
+    logToDiv(message, 'warn');
+    oldWarn.apply(console, arguments);
   };
 })();
 

@@ -50,8 +50,8 @@ app.post('/saveInstructions', (req, res) => {
 
 // Endpoint to save environment variables
 app.post('/saveEnvVars', (req, res) => {
-    const { openaiToken, openaiOrg, discordToken, undetectableAIToken } = req.body; // Added undetectableAIToken
-    fs.writeFileSync('keys.env', `OPENAI_TOKEN=${openaiToken}\nOPENAI_ORGANIZATION=${openaiOrg}\nDISCORD_TOKEN=${discordToken}\nUNDETECTABLE_AI_TOKEN=${undetectableAIToken}`); // Added UNDETECTABLE_AI_TOKEN
+    const { openaiToken, openaiOrg, discordToken, discordClientID, undetectableAIToken } = req.body;
+    fs.writeFileSync('keys.env', `OPENAI_TOKEN=${openaiToken}\nOPENAI_ORGANIZATION=${openaiOrg}\nDISCORD_TOKEN=${discordToken}\nDISCORD_CLIENT_ID=${discordClientID}\nUNDETECTABLE_AI_TOKEN=${undetectableAIToken}`);
     console.log("Saved env vars:", openaiToken, openaiOrg, discordToken, undetectableAIToken); // Added undetectableAIToken
     if (discordToken) {
         connectToDiscord(discordToken);  
@@ -66,6 +66,7 @@ app.get('/getEnvVars', (req, res) => {
         openaiToken: envConfig.OPENAI_TOKEN,
         openaiOrg: envConfig.OPENAI_ORGANIZATION,
         discordToken: envConfig.DISCORD_TOKEN,
+        discordClientID: envConfig.DISCORD_CLIENT_ID,
         undetectableAIToken: envConfig.UNDETECTABLE_AI_TOKEN // New line for Undetectable AI
     });
 });

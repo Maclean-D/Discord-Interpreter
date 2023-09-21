@@ -11,8 +11,8 @@ Web Configuration GUI:
 - [x] Web configuration gui
 - [ ] Discord
   - [X] Connect to bot
-  - [ ] Set Status
-  - [ ] Create App Context Menus
+  - [X] Set Status
+  - [X] Create App Context Menus
   - [ ] Create Slash Commands
 - [ ] Open-Interpreter
   - [ ] Chat
