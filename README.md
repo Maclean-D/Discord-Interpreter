@@ -14,7 +14,12 @@ Web Configuration GUI:
   - [ ] Create App Context Menus
   - [ ] Create Slash Commands
 - [ ] Open-Interpreter Support
+  - [ ] Chat
+  - [ ] File Modification
+  - [ ] Wolfran Alpha
+  - [ ] [Beeper](https://Beeper.com)
 - [ ] Undetectable AI Support
+- [ ] TickTick Integration
 
 ## Setup
 
