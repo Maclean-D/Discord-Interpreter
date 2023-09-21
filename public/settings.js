@@ -83,7 +83,7 @@ textareas.forEach(textarea => {
                     document.getElementById('openAIKey').value = data.openaiToken;
                     document.getElementById('openAIOrg').value = data.openaiOrg;
                     document.getElementById('discordToken').value = data.discordToken;
-                    document.getElementById('undetectableAIKey').value = data.undetectableAIToken; // New line for Undetectable AI
+                    document.getElementById('undetectableAIKey').value = data.undetectableAIToken;
                 });
         });
   });
