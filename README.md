@@ -39,9 +39,10 @@ Open the localhost url by `Ctrl+clicking` on the localhost url provided by the t
 
 ## Roadmap
 
-- [x] Basic bot functionality
-- [ ] Web configuration gui
-- [ ] 
+- [x] Web configuration gui
+- [ ] Open-Interpreter Support
+- [ ] Undetectable AI Support
+
 #### Other
 
 Purchases made through links may provide some compensation to Maclean Dunkin.
