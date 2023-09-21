@@ -2,68 +2,67 @@
 <html>
   <head>
     <title>Settings Page</title>
-    <!-- Link the font family 'Poppins' -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="settings.css">
   </head>
   <body>
-    <header>
-      <!-- Bot logo and Title, including rainbow text effect-->
+    <header class="header-flex">
       <img alt="Bot Logo" src="./Site Files/BotLogo.png" style="height: 50px; width: auto;"/>
       <h1>Morizuru Cr<span class="rainbowText">AI</span>ne</h1>  
     </header>
-    
-    <div style="display: flex; justify-content: space-between;"> <!-- Flex Container-->
-      <!-- Left hand side container containing the prompts, text inputs, and buttons -->
+    <div style="display: flex; justify-content: space-between;">
       <div style="width: 50%; padding-left: 10px;">
-        <!-- Personality prompt and textarea -->
-        <div style="display: flex; justify-content: space-between;">
-          <label style="font-size: 24px;">Personality Prompt:</label>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <label style="font-size: 24px; padding-top: 10px;">Personality Prompt:</label>
           <button id="savePersonality"> 💾 Save</button>
         </div>
         <textarea></textarea>
-        
-        <!-- Instructions prompt and text area -->
-        <div style="display: flex; justify-content: space-between;">
-          <label style="font-size: 24px;">Instructions Prompt:</label>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <label style="font-size: 24px; padding-top: 10px;">Instructions Prompt:</label>
           <button id="saveInstructions">💾 Save</button>
         </div>
         <textarea></textarea>
-        
-        <!-- OpenAI API key input field-->
-        <div style="display: flex; justify-content: space-between;">
-          <label style="font-size: 16px;">OpenAI API Key:</label>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <label style="font-size: 16px; padding-top: 10px;">OpenAI API Key:</label>
           <button id="saveOpenAIKey"> 💾Save</button>
         </div>
-        <input type="text" id="openAIKey">
-
-        <!-- OpenAI Organization ID input field -->
-        <div style="display: flex; justify-content: space-between;">
-          <label style="font-size: 16px;">OpenAI Organization ID:</label>
+        <p style="font-size: 12px; margin-top: -5px; margin-bottom: 2px">Uses GPT-4 or GPT3.5-Turbo (ChatGPT) to answer queries.</p>
+        <a href="https://platform.openai.com/account/api-keys" target="_blank" style="font-size: 12px; margin-bottom: 2px">Obtain API Key</a>
+        <input type="text" id="openAIKey" placeholder="OpenAI API Key">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <label style="font-size: 16px; padding-top: 10px;">OpenAI Organization ID:</label>
           <button id="saveOpenAIOrg">💾Save</button>
         </div>
-        <input type="text" id="openAIOrg">
+        <p style="font-size: 12px; margin-top: -5px; margin-bottom: 2px">Sometimes used to verify access to new OpenAI models.</p>
+        <a href="https://platform.openai.com/account/org-settings" target="_blank" style="font-size: 12px; margin-bottom: 2px">Obtain Organization ID</a>
+        <input type="text" id="openAIOrg" placeholder="OpenAI Organization ID">
         
-        <!-- Discord Bot Token input field -->
-        <div style="display: flex; justify-content: space-between;">
-          <label style="font-size: 16px;" id="discordBotTokenTitle">Discord Bot Token:</label>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <label style="font-size: 16px; padding-top: 10px;" id="discordBotTokenTitle">Discord Bot Token:</label>
           <button id="saveDiscordToken">💾Save</button>
         </div>
-        <input type="text" id="discordToken">
-
+        <p style="font-size: 12px; margin-top: -5px; margin-bottom: 2px">Used to login & connect to your Discord bot.</p>
+        <a href="https://discord.com/developers/applications" target="_blank" style="font-size: 12px; margin-bottom: 2px">Obtain Bot Token</a>
+        <input type="text" id="discordToken" placeholder="Discord Bot Token">
       </div>
-      
-      <!-- Right hand side screen containing log output and action buttons-->
-      <div style="width: 50%;">
-        <!-- Div with flexbox to align buttons horizontally -->
+      <div style="width: 50%; padding-left: 10px;">
         <div style="display: flex;">
           <button id="reloadEnvButton">🔄️Reload Environment</button>
           <button id="clearConsoleButton">🗑️ Clear Console</button>
           <button id="stopServerButton">🛑 Stop Server</button>
         </div>
-        
-        <!-- Console output div -->
         <div id="consoleOutput" style="border: 1px solid #ccc; height: 300px; overflow-y: scroll; padding: 10px;"></div>
+        <div style="padding-top: 10px; padding-left: 10px;">
+          <label style="font-size: 24px;">Optional Plugins:</label>
+        </div>        
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <label style="font-size: 16px; padding-top: 10px; padding-left: 10px;">Undetectable AI:</label>
+          <button id="saveUndetectableAI">💾Save</button>
+        </div>
+        <p style="font-size: 12px; margin-top: -5px; margin-bottom: 2px; padding-left: 10px;">Turns your flagged AI content into writing that bypasses AI detectors.</p>
+        <p style="font-size: 12px; margin-top: 0px; margin-bottom: 2px; padding-left: 10px;">To use right click a message>Apps>Undetectable AI.</p>
+        <a href="https://undetectable.ai?fpr=yws1m" target="_blank" style="font-size: 12px; margin-bottom: 2px; margin-left: 10px;">Obtain API Key</a>
+        <input type="text" id="undetectableAIKey" placeholder="Undetectable AI API key" style="margin-top: 2px; margin-left: 10px;">
       </div>
     </div>
     <script src="settings.js"></script>

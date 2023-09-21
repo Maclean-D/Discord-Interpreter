@@ -40,13 +40,14 @@ body {
   
   /* Text input and textarea settings: width, padding, margin, border, transition */
   input[type="text"], textarea {
-    width: 100%;
+    width: 98%;
     padding: 12px 20px;
     margin: 0px 0;
     box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 4px;
     transition: 0.3s;
+    resize: vertical;
   }
   /* Text input and textarea focus settings: border color, shadow appearance */
   input[type="text"]:focus, textarea:focus {
@@ -78,4 +79,10 @@ body {
     color: transparent;
     display: inline;
     animation: rainbow 7s ease-in-out infinite;
+  }
+  .header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
   }  

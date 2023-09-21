@@ -5,18 +5,14 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById(buttonId).addEventListener("click", function() {
       let content = document.querySelectorAll('textarea')[textIndex].value;
       alert(`Changed content to: ${content}`);
-      // Add your code to save the content
     });
   };
 
   // Call handleClick function for each button
   handleClick("savePersonality", 0);
   handleClick("saveInstructions", 1);
-});
-  
 
-// Add event listener for document loaded
-document.addEventListener("DOMContentLoaded", function() {
+  // Fetch and autofill saved content and environment variables
   fetch('/getTextContent')
     .then(res => res.json())
     .then(data => {
@@ -30,13 +26,10 @@ document.addEventListener("DOMContentLoaded", function() {
       document.getElementById('openAIKey').value = data.openaiToken;
       document.getElementById('openAIOrg').value = data.openaiOrg;
       document.getElementById('discordToken').value = data.discordToken;
-      
-      const discordBotTokenTitle = document.getElementById('discordBotTokenTitle');
-      const botName = data.discordBotName ? `Connected to ${data.discordBotName}` : '';
-      discordBotTokenTitle.innerText = `Discord Bot Token: (${botName})`;
+      document.getElementById('undetectableAIKey').value = data.undetectableAIToken; // New line for Undetectable AI
     });
 
-  // Save content 
+  // Save content to server
   const saveContent = (id, endpoint, content) => {
     fetch(endpoint, {
       method: 'POST',
@@ -47,6 +40,16 @@ document.addEventListener("DOMContentLoaded", function() {
     .then(data => console.log(data.message));
   };
 
+  // Auto-expand textarea
+const textareas = document.querySelectorAll('textarea');
+textareas.forEach(textarea => {
+  textarea.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = (this.scrollHeight) + 'px';
+  });
+});
+
+  // Add event listeners for saving text areas
   ['savePersonality', 'saveInstructions'].forEach((id) => {
     document.getElementById(id).addEventListener("click", function() {
       const content = document.querySelectorAll('textarea')[id === 'savePersonality' ? 0 : 1].value;
@@ -54,12 +57,14 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 
-  ['saveOpenAIKey', 'saveOpenAIOrg', 'saveDiscordToken'].forEach((id) => {
+  // Add event listeners for saving API keys
+  ['saveOpenAIKey', 'saveOpenAIOrg', 'saveDiscordToken', 'saveUndetectableAI'].forEach((id) => {  // Added 'saveUndetectableAI'
     document.getElementById(id).addEventListener("click", function() {
       const openaiToken = document.getElementById('openAIKey').value;
       const openaiOrg = document.getElementById('openAIOrg').value;
       const discordToken = document.getElementById('discordToken').value;
-      saveContent(id, '/saveEnvVars', { openaiToken, openaiOrg, discordToken });
+      const undetectableAIToken = document.getElementById('undetectableAIKey').value; // New line for Undetectable AI
+      saveContent(id, '/saveEnvVars', { openaiToken, openaiOrg, discordToken, undetectableAIToken });  // Added undetectableAIToken
     });
   });
 
@@ -76,6 +81,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     document.getElementById('openAIKey').value = data.openaiToken;
                     document.getElementById('openAIOrg').value = data.openaiOrg;
                     document.getElementById('discordToken').value = data.discordToken;
+                    document.getElementById('undetectableAIKey').value = data.undetectableAIToken; // New line for Undetectable AI
                 });
         });
   });
