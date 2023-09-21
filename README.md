@@ -9,16 +9,17 @@ Web Configuration GUI:
 ## Roadmap
 
 - [x] Web configuration gui
-- [ ] Connect to Discord
+- [ ] Discord
+  - [X] Connect to bot
   - [ ] Set Status
   - [ ] Create App Context Menus
   - [ ] Create Slash Commands
-- [ ] Open-Interpreter Support
+- [ ] Open-Interpreter
   - [ ] Chat
   - [ ] File Modification
   - [ ] Wolfran Alpha
   - [ ] [Beeper](https://Beeper.com)
-- [ ] Undetectable AI Support
+- [ ] Undetectable AI
 - [ ] TickTick Integration
 
 ## Setup
