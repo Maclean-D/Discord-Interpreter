@@ -23,7 +23,7 @@ const connectToDiscord = (token) => {
     });    
 
     client.login(token).catch(err => {
-        console.error('🔴Failed to connect to Discord:', err.message);
+        console.error('🔴 Failed to connect to Discord:', err.message);
     });
 };
 
@@ -31,7 +31,7 @@ const discordToken = process.env.DISCORD_TOKEN || '';
 if (discordToken) {
     connectToDiscord(discordToken);
 } else {
-    console.error('🔴No Discord bot token provided.');
+    console.error('🔴 No Discord bot token provided.');
 }
 
 module.exports = connectToDiscord;

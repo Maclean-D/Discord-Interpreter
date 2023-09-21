@@ -118,7 +118,7 @@ textareas.forEach(textarea => {
 const ws = new WebSocket('ws://localhost:3000');
 
 ws.addEventListener('open', function(event) {
-  console.log('🌐WebSocket connected.');
+  console.log('🌐 WebSocket connected.');
 });
 
 ws.addEventListener('message', function(event) {

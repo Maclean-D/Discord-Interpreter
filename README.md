@@ -9,6 +9,10 @@ Web Configuration GUI:
 ## Roadmap
 
 - [x] Web configuration gui
+- [ ] Connect to Discord
+  - [ ] Set Status
+  - [ ] Create App Context Menus
+  - [ ] Create Slash Commands
 - [ ] Open-Interpreter Support
 - [ ] Undetectable AI Support
 
