@@ -38,14 +38,14 @@ app.server.on('upgrade', (request, socket, head) => {
 app.post('/savePersonality', (req, res) => {
     const { personalityContent } = req.body;
     fs.writeFileSync('personality.txt', personalityContent);
-    res.json({ message: '🧑‍💻Personality content saved!' });
+    res.json({ message: '🧑‍💻 Personality content saved!' });
 });
 
 // Endpoint to save instructions content
 app.post('/saveInstructions', (req, res) => {
     const { instructionsContent } = req.body;
     fs.writeFileSync('instructions.txt', instructionsContent);
-    res.json({ message: '📜Instructions content saved!' });
+    res.json({ message: '📜 Instructions content saved!' });
 });
 
 // Endpoint to save environment variables
@@ -56,7 +56,7 @@ app.post('/saveEnvVars', (req, res) => {
     if (discordToken) {
         connectToDiscord(discordToken);  
     }
-    res.json({ message: '💾Environment variables saved & reloaded' });
+    res.json({ message: '💾 Environment variables saved & reloaded' });
 });
 
 // Endpoint to fetch environment variables
@@ -74,7 +74,7 @@ app.get('/getEnvVars', (req, res) => {
 // Endpoint to reload environment variables
 app.get('/reloadEnvVars', (req, res) => {
     dotenv.config({ path: './keys.env' });
-    res.json({ message: '🔄️Environment variables reloaded' });
+    res.json({ message: '🔄️ Environment variables reloaded' });
 });
 
 // Default endpoint to serve the settings page

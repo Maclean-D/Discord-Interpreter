@@ -40,6 +40,8 @@ npm install body-parser
 npm install dotenv
 npm install ws
 npm install discord.js
+npm install rest
+npm install lib
 ```
 
 3. Run the bot:
