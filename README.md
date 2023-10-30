@@ -49,7 +49,7 @@ npm install lib
 ```bash
 node server.js
 ```
-or open the `WindowsStart.bat` file if you are on Windows.
+Windows users can open the `WindowsStart.bat` file instead.
 
 4. Configuration:
 
